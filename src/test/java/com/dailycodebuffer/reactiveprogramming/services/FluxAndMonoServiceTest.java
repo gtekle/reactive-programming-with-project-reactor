@@ -169,6 +169,44 @@ class FluxAndMonoServiceTest {
     }
 
     @Test
+    void fruitsFluxOnErrorReturn() {
+        var fruitsFlux = fluxAndMonoService.fruitsFluxOnErrorReturn().log();
+
+        StepVerifier.create(fruitsFlux)
+                .expectNext("Apple", "Mango", "Orange")
+                .verifyComplete();
+    }
+
+    @Test
+    void fruitsFluxOnErrorContinue() {
+        var fruitsFlux = fluxAndMonoService.fruitsFluxOnErrorContinue().log();
+
+        StepVerifier.create(fruitsFlux)
+                .expectNext("APPLE", "ORANGE")
+                .verifyComplete();
+    }
+
+    @Test
+    void fruitsFluxOnErrorMap() {
+        var fruitsFlux = fluxAndMonoService.fruitsFluxOnErrorMap().log();
+
+        StepVerifier.create(fruitsFlux)
+                .expectNext("APPLE")
+                .expectError(IllegalStateException.class)
+                .verify();
+    }
+
+    @Test
+    void fruitsFluxDoOnError() {
+        var fruitsFlux = fluxAndMonoService.fruitsFluxDoOnError().log();
+
+        StepVerifier.create(fruitsFlux)
+                .expectNext("APPLE")
+                .expectError(RuntimeException.class)
+                .verify();
+    }
+
+    @Test
     void fruitsMonoConcatWith() {
         var fruitsFlux = fluxAndMonoService.fruitsMonoConcatWith().log();
 

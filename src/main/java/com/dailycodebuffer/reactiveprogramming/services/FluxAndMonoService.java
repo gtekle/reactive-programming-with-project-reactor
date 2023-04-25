@@ -180,6 +180,50 @@ public class FluxAndMonoService {
                 .doOnComplete(() -> System.out.println("Completed is called!"));
     }
 
+    public Flux<String> fruitsFluxOnErrorReturn() {
+        return Flux.just("Apple", "Mango")
+                .concatWith(Flux.error(
+                        new RuntimeException("Exception occurred")
+                ))
+                .onErrorReturn("Orange");
+    }
+
+    public Flux<String> fruitsFluxOnErrorContinue() {
+        return Flux.just("Apple", "Mango", "Orange")
+                .map(s -> {
+                    if (s.equalsIgnoreCase("mango")) throw new RuntimeException("Exception occurred");
+
+                    return s.toUpperCase();
+                })
+                .onErrorContinue((e, f) -> {
+                    System.out.println("e = " + e);
+                    System.out.println("f = " + f);
+                });
+    }
+
+    public Flux<String> fruitsFluxOnErrorMap() {
+        return Flux.just("Apple", "Mango", "Orange")
+                .map(s -> {
+                    if (s.equalsIgnoreCase("mango")) throw new RuntimeException("Exception occurred");
+
+                    return s.toUpperCase();
+                })
+                .onErrorMap(throwable -> {
+                    System.out.println("throwable = " + throwable);
+                    return new IllegalStateException("From onErrorMap");
+                });
+    }
+
+    public Flux<String> fruitsFluxDoOnError() {
+        return Flux.just("Apple", "Mango", "Orange")
+                .map(s -> {
+                    if (s.equalsIgnoreCase("mango")) throw new RuntimeException("Exception occurred");
+
+                    return s.toUpperCase();
+                })
+                .doOnError(throwable -> System.out.println("throwable = " + throwable));
+    }
+
     public Mono<String> fruitMono() {
         return Mono.just("Mango").log();
     }
