@@ -106,6 +106,27 @@ public class FluxAndMonoService {
         return fruits.concatWith(veggies);
     }
 
+    // Loads the data eagerly (whichever stream publishes a data is received)
+    public Flux<String> fruitsFluxMerge() {
+        var fruits = Flux.just("Mango", "Orange")
+                .delayElements(Duration.ofMillis(50));
+
+        var veggies = Flux.just("Tomato", "Lemon")
+                .delayElements(Duration.ofMillis(75));
+
+        return Flux.merge(fruits, veggies);
+    }
+
+    public Flux<String> fruitsFluxMergeWith() {
+        var fruits = Flux.just("Mango", "Orange")
+                .delayElements(Duration.ofMillis(50));
+
+        var veggies = Flux.just("Tomato", "Lemon")
+                .delayElements(Duration.ofMillis(75));
+
+        return fruits.mergeWith(veggies);
+    }
+
     public Mono<String> fruitMono() {
         return Mono.just("Mango").log();
     }
