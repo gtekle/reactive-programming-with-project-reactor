@@ -214,6 +214,18 @@ public class FluxAndMonoService {
                 });
     }
 
+    public Flux<String> fruitsFluxDoOnError() {
+        return Flux.just("Apple", "Mango", "Orange")
+                .map(s -> {
+                    if (s.equalsIgnoreCase("mango")) throw new RuntimeException("Exception occurred");
+
+                    return s.toUpperCase();
+                })
+                .doOnError(throwable -> {
+                    System.out.println("throwable = " + throwable);
+                });
+    }
+
     public Mono<String> fruitMono() {
         return Mono.just("Mango").log();
     }
