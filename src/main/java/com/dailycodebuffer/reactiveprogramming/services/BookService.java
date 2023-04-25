@@ -3,6 +3,7 @@ package com.dailycodebuffer.reactiveprogramming.services;
 import com.dailycodebuffer.reactiveprogramming.domain.Book;
 import com.dailycodebuffer.reactiveprogramming.domain.BookInfo;
 import com.dailycodebuffer.reactiveprogramming.domain.Review;
+import com.dailycodebuffer.reactiveprogramming.exception.BookException;
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -26,6 +27,10 @@ public class BookService {
                 .flatMap(bookInfo -> {
                     Mono<List<Review>> reviews = reviewService.getReviews(bookInfo.getBookId()).collectList();
                     return reviews.map(review -> new Book(bookInfo, review));
+                })
+                .onErrorMap(throwable -> {
+                    log.error("Exception is : " + throwable);
+                    return new BookException("Exception occurred while fetching books!");
                 })
                 .log();
     }
