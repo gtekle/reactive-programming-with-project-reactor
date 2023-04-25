@@ -3,8 +3,6 @@ package com.dailycodebuffer.reactiveprogramming.services;
 import org.junit.jupiter.api.Test;
 import reactor.test.StepVerifier;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class FluxAndMonoServiceTest {
 
     FluxAndMonoService fluxAndMonoService = new FluxAndMonoService();
