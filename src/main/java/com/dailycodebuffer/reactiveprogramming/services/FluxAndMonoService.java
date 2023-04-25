@@ -221,9 +221,7 @@ public class FluxAndMonoService {
 
                     return s.toUpperCase();
                 })
-                .doOnError(throwable -> {
-                    System.out.println("throwable = " + throwable);
-                });
+                .doOnError(throwable -> System.out.println("throwable = " + throwable));
     }
 
     public Mono<String> fruitMono() {
