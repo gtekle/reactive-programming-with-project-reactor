@@ -178,6 +178,15 @@ class FluxAndMonoServiceTest {
     }
 
     @Test
+    void fruitsFluxOnErrorContinue() {
+        var fruitsFlux = fluxAndMonoService.fruitsFluxOnErrorContinue().log();
+
+        StepVerifier.create(fruitsFlux)
+                .expectNext("APPLE", "ORANGE")
+                .verifyComplete();
+    }
+
+    @Test
     void fruitsMonoConcatWith() {
         var fruitsFlux = fluxAndMonoService.fruitsMonoConcatWith().log();
 
