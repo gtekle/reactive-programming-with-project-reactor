@@ -75,4 +75,39 @@ public class BackPressureTest {
             }
         });
     }
+
+    @Test
+    public void testBackPressureBuffer() {
+        var numbers = Flux.range(1, 100).log();
+
+        numbers
+                .onBackpressureBuffer(10, i -> System.out.println("Buffered value = " + i))
+                .subscribe(new BaseSubscriber<Integer>() {
+            @Override
+            protected void hookOnSubscribe(Subscription subscription) {
+                request(3);
+            }
+
+            @Override
+            protected void hookOnNext(Integer value) {
+                System.out.println("value = " + value);
+                if (value == 3) hookOnCancel();
+            }
+
+            @Override
+            protected void hookOnComplete() {
+                System.out.println("Completed");
+            }
+
+            @Override
+            protected void hookOnError(Throwable throwable) {
+                super.hookOnError(throwable);
+            }
+
+            @Override
+            protected void hookOnCancel() {
+                super.hookOnCancel();
+            }
+        });
+    }
 }
