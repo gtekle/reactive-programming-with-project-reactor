@@ -61,6 +61,15 @@ class FluxAndMonoServiceTest {
     }
 
     @Test
+    void fruitsFluxConcatMap() {
+        var fruitsFlux = fluxAndMonoService.fruitsFluxConcatMap();
+
+        StepVerifier.create(fruitsFlux)
+                .expectNextCount(17)
+                .verifyComplete();
+    }
+
+    @Test
     void fruitMono() {
         var fruitMono = fluxAndMonoService.fruitMono();
 

@@ -40,9 +40,19 @@ public class FluxAndMonoService {
     public Flux<String> fruitsFluxFlatMapAsync() {
         return Flux.fromIterable(List.of("Mango", "Orange", "Banana"))
                 .flatMap(s -> Flux.just(s.split(""))
-                .delayElements(Duration.ofMillis(
-                        new Random().nextInt(1000)
-                )))
+                        .delayElements(Duration.ofMillis(
+                                new Random().nextInt(1000)
+                        )))
+                .log();
+    }
+
+    // Concat map maintains the order of the stream objects while the flatMap doesn't
+    public Flux<String> fruitsFluxConcatMap() {
+        return Flux.fromIterable(List.of("Mango", "Orange", "Banana"))
+                .concatMap(s -> Flux.just(s.split(""))
+                        .delayElements(Duration.ofMillis(
+                                new Random().nextInt(1000)
+                        )))
                 .log();
     }
 
