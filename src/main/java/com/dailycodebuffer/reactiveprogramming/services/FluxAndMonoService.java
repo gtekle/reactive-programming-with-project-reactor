@@ -57,6 +57,15 @@ public class FluxAndMonoService {
                 .log();
     }
 
+    public Flux<String> fruitsFluxDefaultIfEmpty(int number) {
+        Function<Flux<String>, Flux<String>> filterData = data -> data.filter(s -> s.length() > number);
+
+        return Flux.fromIterable(List.of("Mango", "Orange", "Banana"))
+                .transform(filterData)
+                .defaultIfEmpty("Default Fruit")
+                .log();
+    }
+
     public Flux<String> fruitsFluxTransform(int number) {
         Function<Flux<String>, Flux<String>> filterData = data -> data.filter(s -> s.length() > number);
 
