@@ -84,6 +84,14 @@ public class FluxAndMonoService {
                 .log();
     }
 
+    // It does it in sequential order
+    public Flux<String> fruitsFluxConcat() {
+        var fruits = Flux.just("Mango", "Orange");
+        var veggies = Flux.just("Tomato", "Lemon");
+
+        return Flux.concat(fruits, veggies);
+    }
+
     public Mono<String> fruitMono() {
         return Mono.just("Mango").log();
     }
