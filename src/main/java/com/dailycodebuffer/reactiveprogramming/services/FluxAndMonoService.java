@@ -7,11 +7,11 @@ import java.util.List;
 
 public class FluxAndMonoService {
     public Flux<String> fruitsFlux() {
-        return Flux.fromIterable(List.of("Mango", "Orange", "Banana"));
+        return Flux.fromIterable(List.of("Mango", "Orange", "Banana")).log();
     }
 
     public Mono<String> fruitMono() {
-        return Mono.just("Mango");
+        return Mono.just("Mango").log();
     }
 
     public static void main(String[] args) {
