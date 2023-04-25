@@ -175,12 +175,8 @@ public class FluxAndMonoService {
     public Flux<String> fruitsFluxFilterDoOn(int number) {
         return Flux.fromIterable(List.of("Mango", "Orange", "Banana"))
                 .filter(fr -> fr.length() > number)
-                .doOnNext(s -> {
-                    System.out.println("s = " + s);
-                })
-                .doOnSubscribe(subscription -> {
-                    System.out.println("subscription = " + subscription.toString());
-                })
+                .doOnNext(s -> System.out.println("s = " + s))
+                .doOnSubscribe(subscription -> System.out.println("subscription = " + subscription.toString()))
                 .doOnComplete(() -> System.out.println("Completed is called!"));
     }
 
