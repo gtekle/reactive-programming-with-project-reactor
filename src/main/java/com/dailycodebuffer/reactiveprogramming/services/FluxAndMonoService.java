@@ -180,6 +180,14 @@ public class FluxAndMonoService {
                 .doOnComplete(() -> System.out.println("Completed is called!"));
     }
 
+    public Flux<String> fruitsFluxOnErrorReturn() {
+        return Flux.just("Apple", "Mango")
+                .concatWith(Flux.error(
+                        new RuntimeException("Exception occurred")
+                ))
+                .onErrorReturn("Orange");
+    }
+
     public Mono<String> fruitMono() {
         return Mono.just("Mango").log();
     }
