@@ -127,6 +127,16 @@ public class FluxAndMonoService {
         return fruits.mergeWith(veggies);
     }
 
+    public Flux<String> fruitsFluxMergeWithSequential() {
+        var fruits = Flux.just("Mango", "Orange")
+                .delayElements(Duration.ofMillis(50));
+
+        var veggies = Flux.just("Tomato", "Lemon")
+                .delayElements(Duration.ofMillis(75));
+
+        return Flux.mergeSequential(fruits, veggies);
+    }
+
     public Mono<String> fruitMono() {
         return Mono.just("Mango").log();
     }
