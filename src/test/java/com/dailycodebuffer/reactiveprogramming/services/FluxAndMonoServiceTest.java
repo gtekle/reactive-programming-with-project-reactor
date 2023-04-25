@@ -187,6 +187,15 @@ class FluxAndMonoServiceTest {
     }
 
     @Test
+    void fruitsFluxFilterDoOn() {
+        var fruitsFlux = fluxAndMonoService.fruitsFluxFilterDoOn(5);
+
+        StepVerifier.create(fruitsFlux)
+                .expectNext("Orange", "Banana")
+                .verifyComplete();
+    }
+
+    @Test
     void fruitMono() {
         var fruitMono = fluxAndMonoService.fruitMono();
 

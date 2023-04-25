@@ -171,6 +171,19 @@ public class FluxAndMonoService {
                 .map(objects -> objects.getT1() + objects.getT2() + objects.getT3());
     }
 
+    // Side effect callbacks
+    public Flux<String> fruitsFluxFilterDoOn(int number) {
+        return Flux.fromIterable(List.of("Mango", "Orange", "Banana"))
+                .filter(fr -> fr.length() > number)
+                .doOnNext(s -> {
+                    System.out.println("s = " + s);
+                })
+                .doOnSubscribe(subscription -> {
+                    System.out.println("subscription = " + subscription.toString());
+                })
+                .doOnComplete(() -> System.out.println("Completed is called!"));
+    }
+
     public Mono<String> fruitMono() {
         return Mono.just("Mango").log();
     }
