@@ -6,6 +6,7 @@ import reactor.core.publisher.Mono;
 import java.time.Duration;
 import java.util.List;
 import java.util.Random;
+import java.util.function.Function;
 
 public class FluxAndMonoService {
     public Flux<String> fruitsFlux() {
@@ -53,6 +54,14 @@ public class FluxAndMonoService {
                         .delayElements(Duration.ofMillis(
                                 new Random().nextInt(1000)
                         )))
+                .log();
+    }
+
+    public Flux<String> fruitsFluxTransform(int number) {
+        Function<Flux<String>, Flux<String>> filterData = data -> data.filter(s -> s.length() > number);
+
+        return Flux.fromIterable(List.of("Mango", "Orange", "Banana"))
+                .transform(filterData)
                 .log();
     }
 
