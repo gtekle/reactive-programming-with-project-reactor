@@ -86,4 +86,13 @@ class FluxAndMonoServiceTest {
                 .expectNextCount(1)
                 .verifyComplete();
     }
+
+    @Test
+    void fruitMonoFlatMapMany() {
+        var fruitsFlux = fluxAndMonoService.fruitMonoFlatMapMany();
+
+        StepVerifier.create(fruitsFlux)
+                .expectNextCount(5)
+                .verifyComplete();
+    }
 }

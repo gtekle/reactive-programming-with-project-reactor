@@ -66,6 +66,13 @@ public class FluxAndMonoService {
                 .log();
     }
 
+    // Change a Mono into Flux
+    public Flux<String> fruitMonoFlatMapMany() {
+        return Mono.just("Mango")
+                .flatMapMany(s -> Flux.just(s.split("")))
+                .log();
+    }
+
     public static void main(String[] args) {
         FluxAndMonoService fluxAndMonoService = new FluxAndMonoService();
 
